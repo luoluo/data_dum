@@ -2,6 +2,7 @@
 import sys
 from sys import exc_info
 import logging
+from logger import Logger
 from openpyxl import load_workbook
 from openpyxl import cell
 from openpyxl.cell import get_column_letter
@@ -90,31 +91,6 @@ class report_handler:
             self.logger.debug(items)
             cnt += 1
 
-class Logger:
-    def __init__(self): 
-        logging.basicConfig(filename="../log/log.all", level=logging.DEBUG)
-        self.logger = logging.getLogger()
-        wf = logging.FileHandler('../log/log.wf')
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        wf.setFormatter(formatter)
-        wf.setLevel(logging.WARNING)
-
-        db = logging.FileHandler('../log/log.debug')
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        db.setFormatter(formatter)
-        db.setLevel(logging.DEBUG)
-
-        info = logging.FileHandler('../log/log.info')
-        formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-        info.setFormatter(formatter)
-        info.setLevel(logging.INFO)
-
-        self.logger.addHandler(info)
-        self.logger.addHandler(wf)
-        self.logger.addHandler(db)
-
-    def get_logger(self):
-        return self.logger
 
 if __name__ == '__main__' :
     rh = report_handler(Logger().get_logger())
