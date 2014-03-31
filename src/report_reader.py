@@ -29,12 +29,12 @@ class report_reader:
         self.read_accurate(self.user_info_accurate_map)
         self.read_coverage(self.user_info_coverage_map)
         self.read_time_delay(self.user_info_time_delay_map)
-        self.logger.info("data lod end")
+        self.logger.info("data load end")
 
     def read_accurate(self,  user_info_accurate_map):
         cnt = 1
         ws = self.wb.get_sheet_by_name(self.wb.get_sheet_names()[0])
-        self.logger.debug("reading accurate")
+        self.logger.info("reading accurate")
         for row in range(2, ws.get_highest_row()):
             items = []
             for col in range(1, ws.get_highest_column()+1):
@@ -57,16 +57,12 @@ class report_reader:
             user_info_accurate_map[items[1]] = items
             self.logger.debug(items)
             cnt += 1
-        self.logger.debug("read accurate end")
-        print len(user_info_accurate_map.keys())
-        for key in user_info_accurate_map.keys():
-            print len(user_info_accurate_map[key])
+        self.logger.info("read accurate end, total load = %d" % len(user_info_accurate_map.keys()))
 
-    def read_coverage(self,  user_info_accurate_map):
+    def read_coverage(self, user_info_coverage_map):
         cnt = 1
         ws = self.wb.get_sheet_by_name(self.wb.get_sheet_names()[1])
-        user_info_coverage_map = {}
-        self.logger.debug("reading coverage")
+        self.logger.info("reading coverage")
         for row in range(2,ws.get_highest_row()):
             items = []
             for col in range(1, ws.get_highest_column()+1):
@@ -74,17 +70,15 @@ class report_reader:
                 items.append(ws['%s%s' % (col, row)].value)
             if cnt == 10:
                 break
-            user_info_coverage_map[items[4]] = items
+            user_info_coverage_map[items[5]] = items
             self.logger.debug(items)
             cnt += 1
 
         print len(user_info_coverage_map.keys())
-        for key in user_info_coverage_map.keys():
-            print len(user_info_coverage_map[key])
-        self.logger.debug("read coverage end")
+        self.logger.info("read coverage end, total load = %d" % len(user_info_coverage_map.keys()))
 
     def read_time_delay(self, user_info_time_delay_map):
-        self.logger.debug("reading time delay")
+        self.logger.info("reading time delay")
         cnt = 1
         ws = self.wb.get_sheet_by_name(self.wb.get_sheet_names()[2])
         for row in range(2, ws.get_highest_row()):
@@ -97,6 +91,6 @@ class report_reader:
             user_info_time_delay_map[items[5]] = items
             self.logger.debug(items)
             cnt += 1
-        self.logger.debug("read time delay end")
+        self.logger.info("read time delay end, total load = %d" % len(user_info_time_delay_map.keys()))
 
 
