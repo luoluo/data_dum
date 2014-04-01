@@ -27,9 +27,9 @@ class report_handler:
 
     def get_useful_info(self, read_data):
         logger.info("dealing useful info")
-        info_meta = [0]*13
         logger.info("dealing useful info dealy time")
         for user_id in read_data.user_info_time_delay_map.keys():
+            info_meta = [0]*13
             data_meta = read_data.user_info_time_delay_map[user_id]
             info_meta[0] = data_meta[0]
             info_meta[1] = data_meta[5]
@@ -46,16 +46,17 @@ class report_handler:
             if data_meta[7] == u'是':
                 user_stat += 0x4
             info_meta[10] = user_stat
-#            info_meta[9] = read_data.user_info_time_delay_map[user_id][0]
-#            info_meta[10] = read_data.user_info_time_delay_map[user_id][0]
-#            info_meta[11] = read_data.user_info_time_delay_map[user_id][0]
-#            info_meta[12] = read_data.user_info_time_delay_map[user_id][0]
+            info_meta[9] = None
+            info_meta[10] = None
+            info_meta[11] = None
+            info_meta[12] = None
             self.useful_info[user_id] = info_meta
             logger.debug(self.useful_info[user_id])
         logger.info("dealing useful info dealy time end")
 
         logger.info("dealing useful info accurate")
         for user_id in read_data.user_info_accurate_map.keys():
+            info_meta = [0]*13
             data_meta = read_data.user_info_accurate_map[user_id]
             if user_id in self.useful_info:
                 self.useful_info[user_id][9] = data_meta[5]
@@ -63,9 +64,9 @@ class report_handler:
                 info_meta[0] = data_meta[0]
                 info_meta[1] = data_meta[1]
                 info_meta[2] = data_meta[4]
-    #            info_meta[3] = data_meta[0]
-    #            info_meta[4] = data_meta[9]
-    #            info_meta[5] = data_meta[10]
+                info_meta[3] = None
+                info_meta[4] = None
+                info_meta[5] = None
                 info_meta[6] = data_meta[7]
                 info_meta[7] = data_meta[8]
                 info_meta[8] = data_meta[14]
@@ -76,51 +77,55 @@ class report_handler:
                     user_stat += 0x2
                 if data_meta[13] == u'是':
                     user_stat += 0x4
-    #            info_meta[9] = read_data.user_info_time_delay_map[user_id][0]
+                info_meta[9] = None
                 info_meta[10] = user_stat
-    #            info_meta[11] = read_data.user_info_time_delay_map[user_id][0]
-    #            info_meta[12] = read_data.user_info_time_delay_map[user_id][0]
+                info_meta[11] = None
+                info_meta[12] = None
                 self.useful_info[user_id] = info_meta
-            logger.debug(self.useful_info[user_id])
+                logger.debug(self.useful_info[user_id])
         logger.info("dealing useful info accurate end")
 
         logger.info("dealing useful info coverage")
         logger.info("coverage size = %d" % len(read_data.user_info_coverage_map.keys()))
         for user_id in read_data.user_info_coverage_map.keys():
+            info_meta = [0]*13
             data_meta = read_data.user_info_coverage_map[user_id]
             if user_id in self.useful_info:
-                logger.debug("id in useful_info")
-                #pass
-                #self.useful_info[user_id][] = data_meta[]
+                pass
             else :
                 info_meta[0] = data_meta[0]
                 info_meta[1] = data_meta[5]
                 info_meta[2] = data_meta[6]
-    #            info_meta[3] = data_meta[0]
-    #            info_meta[4] = data_meta[9]
-    #            info_meta[5] = data_meta[10]
-    #            info_meta[6] = data_meta[7]
-    #            info_meta[7] = data_meta[8]
+                info_meta[3] = None
+                info_meta[4] = None
+                info_meta[5] = None
+                info_meta[6] = None
+                info_meta[7] = None
                 info_meta[8] = data_meta[3]
                 user_stat = 0
                 if data_meta[7] == u'是':
                     user_stat += 0x4
                 if data_meta[4] == u'是':
                     user_stat += 0x2
-    #            info_meta[9] = read_data.user_info_time_delay_map[user_id][0]
+                info_meta[9] = None
                 info_meta[10] = user_stat
                 # found by prism
                 if data_meta[8] == u'是':
                     info_meta[11] = 0x2
                 else :
                     info_meta[11] = 0
-    #            info_meta[12] = read_data.user_info_time_delay_map[user_id][0]
+                info_meta[12] = None
                 self.useful_info[user_id] = info_meta
-            logger.debug(self.useful_info[user_id])
+                logger.debug(self.useful_info[user_id])
         logger.info("dealing useful info coverage end")
 
+        logger.info("the useful info as follows:")
+        logger.debug("useful_info len = %d" % len(self.useful_info.keys()))
+        logger.debug(self.useful_info.keys())
+        for user_id in self.useful_info.keys():
+            logger.debug(self.useful_info[user_id])
+
         logger.info("dealing useful info end")
-        return
 
 if __name__ == '__main__' :
     logger = Logger().get_logger()
