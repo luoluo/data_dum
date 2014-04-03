@@ -5,6 +5,7 @@ class report_handler:
     def __init__(self, logger):
         self.logger = logger
         self.useful_info = {}
+        self.useful_time_info = {}
 #   0           1         2         3              4            5        6             7                8               9         10          11              12           13         14
 #time_period userid   username   website     register_time  audit_type status        audit_time      sent_time     is_illegal  illegal_type is_very_danger  register_time  is_new  l1_account
 #time_period username l2_account l1_account  is_very_danger userid     register_time is_new          is_prism_found     9          10            11           12
@@ -27,7 +28,7 @@ class report_handler:
 
     def get_useful_info(self, read_data):
         logger.info("dealing useful info")
-        logger.info("dealing useful info dealy time")
+        logger.info("dealing useful time info dealy time")
         for user_id in read_data.user_info_time_delay_map.keys():
             info_meta = [0]*13
             data_meta = read_data.user_info_time_delay_map[user_id]
@@ -50,9 +51,9 @@ class report_handler:
             info_meta[10] = None
             info_meta[11] = None
             info_meta[12] = None
-            self.useful_info[user_id] = info_meta
-            logger.debug(self.useful_info[user_id])
-        logger.info("dealing useful info dealy time end")
+            self.useful_time_info[user_id] = info_meta
+            logger.debug(self.useful_time_info[user_id])
+        logger.info("dealing useful time info dealy time end")
 
         logger.info("dealing useful info accurate")
         for user_id in read_data.user_info_accurate_map.keys():
@@ -118,6 +119,12 @@ class report_handler:
                 self.useful_info[user_id] = info_meta
                 logger.debug(self.useful_info[user_id])
         logger.info("dealing useful info coverage end")
+
+        logger.info("the useful_time info as follows:")
+        logger.debug("useful_time_info len = %d" % len(self.useful_time_info.keys()))
+        logger.debug(self.useful_time_info.keys())
+        for user_id in self.useful_time_info.keys():
+            logger.debug(self.useful_time_info[user_id])
 
         logger.info("the useful info as follows:")
         logger.debug("useful_info len = %d" % len(self.useful_info.keys()))
